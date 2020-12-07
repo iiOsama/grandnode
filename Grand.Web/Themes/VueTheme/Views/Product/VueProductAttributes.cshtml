@@ -133,7 +133,7 @@
                                     messageContainer.innerText = message;
 
                                     downloadBtn.style.display = "block";
-                                    downloadBtn.setAttribute('href', downloadUrl);
+                                    downloadBtn.children[0].setAttribute('href', downloadUrl);
 
                                 } else {
                                     var message = response.data.message;
