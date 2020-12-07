@@ -125,4 +125,7 @@
     .shopping-cart.table tr {
         width: 100%;
     }
+    .order-completed-page .jumbotron .display-3 {
+        font-size: 56px;
+    }
 }
