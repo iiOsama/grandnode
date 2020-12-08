@@ -583,6 +583,24 @@ input:checked ~ .color-container .color::before {
     position: relative;
     overflow: hidden;
 }
+.product-box .picture-container a {
+    display: block;
+    position: relative;
+}
+.product-box .picture-container a::before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+}
+.product-box .picture-container a img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    max-width: 100%;
+    margin: auto;
+}
 .product-box .hover-img {
     position: absolute;
     top: 0;
