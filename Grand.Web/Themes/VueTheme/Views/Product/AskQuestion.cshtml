@@ -18,7 +18,7 @@
     }
     else
     {
-        <form asp-route="AskQuestion" method="post" v-on:submit.prevent="validateBeforeSubmit($event)"> 
+        <form asp-route="AskQuestion" method="post"  v-on:submit.prevent="validateBeforeSubmitParam($event, 'send-email')"> 
             <div asp-validation-summary="ModelOnly" class="message-error"></div>
             <fieldset class="form-group">
                 <label asp-for="Email" class="col-form-label">@T("Products.AskQuestion.Email"):</label>
@@ -46,7 +46,6 @@
                     <captcha />
                 </div>
             }
-            <input type="hidden" value="send-email" name="send-email" />
             <div class="buttons generalMarginSupporter pt-1 pb-1">
                 <input type="submit" name="send-email" class="btn btn-info send-ask-question-button" value="@T("Products.AskQuestion.Button")" />
                 <span class="sr-only">@T("Products.AskQuestion.Button")</span>
