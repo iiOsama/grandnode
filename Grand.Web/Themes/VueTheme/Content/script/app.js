@@ -107,6 +107,18 @@ var vm = new Vue({
                 }
             });
         },
+        validateBeforeSubmitParam(event, param) {
+            this.$validator.validateAll().then((result) => {
+                if (result) {
+                    var para = document.createElement("input");
+                    para.name = param;
+                    para.type = 'hidden';
+                    event.srcElement.appendChild(para);
+                    event.srcElement.submit();
+                    return
+                }
+            });
+        },
         isMobile() {
             return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
         }
