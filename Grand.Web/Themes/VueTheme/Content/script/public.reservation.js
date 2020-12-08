@@ -38,18 +38,6 @@
             this.fillAvailableDatesTo(startDateYear, startDateMonth);
         }
         var defdate = new Date(this.startDate);
-
-        //$("#reservationDatepicker").datepicker({
-        //    onSelect: this.onDatePickerDateChange,
-        //    firstDay: 1,
-        //    beforeShowDay: this.daysToMark,
-        //    onChangeMonthYear: function (year, month, inst) {
-        //        $("#hoursDiv").html('');
-        //        Reservation.fillAvailableDates(year, month, Reservation._parameter, false);
-        //        Reservation.onDatePickerDateChange();
-        //    },
-        //    defaultDate: defdate
-        //});
         var reservationDatepicker = new Pikaday({
             field: document.getElementById('reservationDatepicker'),
             onSelect: this.onDatePickerDateChange,
@@ -84,16 +72,6 @@
             defaultDate: defdate
         });
 
-        //$("#reservationDatepickerFrom").datepicker({
-        //    firstDay: 1,
-        //    defaultDate: defdate,
-        //    onSelect: this.onDatePickerSelect,
-        //    beforeShowDay: this.daysToMarkFrom,
-        //    onChangeMonthYear: function (year, month, inst) {
-        //        Reservation.fillAvailableDatesFrom(year, month);
-        //    },
-        //});
-
         var reservationDatepickerFrom = new Pikaday({
             field: document.getElementById('reservationDatepickerFrom'),
             onSelect: this.onDatePickerSelect,
@@ -124,15 +102,6 @@
             defaultDate: defdate
         });
 
-        //$("#reservationDatepickerTo").datepicker({
-        //    firstDay: 1,
-        //    defaultDate: defdate,
-        //    onSelect: this.onDatePickerSelect,
-        //    beforeShowDay: this.daysToMarkTo,
-        //    onChangeMonthYear: function (year, month, inst) {
-        //        Reservation.fillAvailableDatesTo(year, month);
-        //    },
-        //});
         var reservationDatepickerTo = new Pikaday({
             field: document.getElementById('reservationDatepickerTo'),
             onSelect: this.onDatePickerSelect,
@@ -167,7 +136,11 @@
         var dropdown = document.getElementById("parameterDropdown");
         if (dropdown != null) {
             document.querySelector("#parameterDropdown").addEventListener('change', function () {
-                Reservation.fillAvailableDates(Reservation.currentYear, Reservation.currentMonth, this.value, true);
+                Reservation.fillAvailableDates(Reservation.currentYear, Reservation.currentMonth, this.value);
+                reservationDatepicker.clear();
+                if (document.getElementById("hoursDiv") != null) {
+                    document.getElementById("hoursDiv").innerHTML = Reservation.noReservationsMessage;
+                }
             });
         }
     },
@@ -178,19 +151,6 @@
         this.startDateYear = startDateYear;
 
         this.fillAvailableDates(startDateYear, startDateMonth, Reservation._parameter, false);
-
-        //$("#reservationDatepicker").datepicker({
-        //    onSelect: this.onDatePickerDateChange,
-        //    firstDay: 1,
-        //    beforeShowDay: this.daysToMark,
-        //    onChangeMonthYear: function (year, month, inst) {
-        //        if (document.getElementById("hoursDiv") != null) {
-        //            document.getElementById("hoursDiv").innerHTML = '';
-        //        }
-        //        Reservation.fillAvailableDates(year, month, Reservation._parameter, false);
-        //    },
-        //    defaultDate: this.startDate
-        //});
 
         var reservationDatepickerFromRe = new Pikaday({
             field: document.getElementById('reservationDatepicker'),
@@ -310,14 +270,13 @@
         }
     },
 
-    fillAvailableDates: function fillAvailableDates(year, month, parameter, reload) {
+    fillAvailableDates: function fillAvailableDates(year, month, parameter) {
         var postData = {
             productId: Reservation.productId,
             month: month,
             year: year,
             parameter: parameter
         };
-
 
         addAntiForgeryToken(postData);
 
@@ -333,38 +292,10 @@
             Reservation.currentMonth = month;
             Reservation.currentYear = year;
             Reservation.availableDates = response.data;
-            if (reload) {
-                Reservation._parameter = parameter;
-                //$("#reservationDatepicker").datepicker("destroy");
-                Reservation.reload(new Date(year, month - 1, 1), Reservation.currentYear, Reservation.currentMonth);
-                //$("#reservationDatepicker").datepicker("refresh");
-            }
-            return true;
+            Reservation._parameter = parameter;
         }).catch(function (error) {
             alert(error)
         })
-        //$.ajax({
-        //    cache: false,
-        //    type: "POST",
-        //    url: Reservation.ajaxUrl,
-        //    dataType: 'json',
-        //    data: postData,
-        //    async: false
-        //}).done(function (data) {
-        //    Reservation.currentMonth = month;
-        //    Reservation.currentYear = year;
-        //    Reservation.availableDates = data;
-        //    if (reload) {
-        //        Reservation._parameter = parameter;
-        //        $("#reservationDatepicker").datepicker("destroy");
-        //        Reservation.reload(new Date(year, month - 1, 1), Reservation.currentYear, Reservation.currentMonth);
-        //        $("#reservationDatepicker").datepicker("refresh");
-        //    }
-        //}).fail(function () {
-        //    alert("Error");
-        //});
-
-
     },
 
     fillAvailableDatesFrom: function fillAvailableDatesFrom(year, month) {
