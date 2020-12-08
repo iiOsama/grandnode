@@ -11,7 +11,7 @@
     <h2 class="generalTitle text-sm-center ">@T("Checkout.SelectPaymentMethod")</h2>
     @await Component.InvokeAsync("Widget", new { widgetZone = "checkout_payment_method_top" })
     <div class="payment-method">
-        <form asp-route="CheckoutPaymentMethod" method="post">
+        <form asp-route="CheckoutPaymentMethod" method="post" v-on:submit.prevent="validateBeforeSubmitParam($event, 'nextstep')">
             @if (Model.DisplayRewardPoints && Model.PaymentMethods.Any())
             {
                 <div class="use-reward-points pt-1 pb-1">
@@ -75,7 +75,6 @@
                 </ul>
 
                 <div class="col-12 buttons mt-1 mb-1">
-                    <input type="hidden" name="nextstep" />
                     <input type="submit" value="@T("Checkout.NextButton")" class="btn btn-info new-address-next-step-button" />
                 </div>
             }

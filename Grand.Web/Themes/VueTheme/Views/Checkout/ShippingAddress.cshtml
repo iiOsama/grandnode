@@ -9,7 +9,7 @@
 <div class="page checkout-page shipping-address-page">
     @await Component.InvokeAsync("CheckoutProgress", new { step = CheckoutProgressStep.Address })
     <h2 class="generalTitle text-sm-center ">@T("Checkout.ShippingAddress")</h2>
-    <form asp-route="CheckoutShippingAddress" method="post" v-on:submit.prevent="validateBeforeSubmit($event)">
+    <form asp-route="CheckoutShippingAddress" method="post" v-on:submit.prevent="validateBeforeSubmitParam($event, 'nextstep')">
         @if (Model.AllowPickUpInStore && !Model.PickUpInStoreOnly && Model.PickupPoints.Any())
         {
             <div class="pickup-in-store genera">
@@ -238,7 +238,6 @@
             </div>
         }
         <div class="buttons col-12 mb-2 mt-2">
-            <input type="hidden" name="nextstep" />
             <input type="submit" value="@T("Checkout.NextButton")" class="btn btn-info new-address-next-step-button" />
         </div>
     </form>
