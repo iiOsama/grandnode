@@ -484,14 +484,13 @@
 <script asp-location="Footer">
     function removeexternalassociation(itemId) {
         if (confirm('@T("Common.AreYouSure")')) {
-            var postData = {
-                id: itemId
-            };
-            addAntiForgeryToken(postData);
+            var bodyFormData = new FormData();
+            bodyFormData.append('Id', itemId);
+            bodyFormData.append('__RequestVerificationToken', document.querySelector('input[name=__RequestVerificationToken]').value);
             axios({
                 method: 'POST',
                 url: '@Url.Action("RemoveExternalAssociation", "Customer")',
-                data: postData,
+                data: bodyFormData,
             }).then(function (response) {
                 location = response.data.redirect;
             }).catch(function (error) {
