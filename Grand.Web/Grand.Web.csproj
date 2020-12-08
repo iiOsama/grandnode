@@ -38,6 +38,8 @@
     <Compile Remove="Plugins\**" />
     <EmbeddedResource Remove="Plugins\**" />
     <None Remove="Plugins\**" />
+    <None Remove="Themes\VueTheme\Content\css\pikaday.min.css" />
+    <None Remove="Themes\VueTheme\Content\script\pikaday.min.js" />
     <None Remove="Themes\VueTheme\Content\script\vue.push.notifications.js" />
     <Content Update="Plugins\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
